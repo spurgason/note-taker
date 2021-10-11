@@ -22,10 +22,6 @@ router.delete('/notes/:id', (req, res) => {
     res.json(true)
 });
 
-router.patch('/notes/:id', (req, res) => {
-
-});
-
 // function that is used to write to the db.json file to save note data
 function writeNewNote(body, notesArray) {
     const note = body;
@@ -40,27 +36,17 @@ function writeNewNote(body, notesArray) {
 
 // function that deletes items in the array according to their id
 function deleteNote(id, notesArray) {
-    for (let i = 0; i < notesArray.length; i++) {
-        const notes = notesArray[i];
 
+    notesArray.find((notes, index) => {
+    
         if (notes.id == id) {
-            notesArray.splice(i, 1);
+            notesArray.splice(index, 1);
             fs.writeFileSync(
                 path.join(__dirname, '../../db/db.json'),
-                JSON.stringify(notesArray, null, 2)
+                JSON.stringify(notesArray)
             );
         }
-    }
-}
-
-function updateNote(id, notesArray) {
-    for (let i = 0; i < notesArray.length; i++) {
-        const notes = notesArray[i];
-
-        if (notes.id === id) {
-
-        }
-    }
+    }) 
 }
 
 module.exports = router;
